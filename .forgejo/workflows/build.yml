@@ -64,6 +64,7 @@ jobs:
           labels: ${{ steps.metadata.outputs.labels }}
           layers: true
           extra-args: |
+            --authfile /run/user/0/containers/auth.json
             --cache-from codeberg.org/jvllmr/forgejo-pkg-cleanup-cache
             --cache-to codeberg.org/jvllmr/forgejo-pkg-cleanup-cache
           # annotations: ${{ steps.metadata.outputs.annotations }}
