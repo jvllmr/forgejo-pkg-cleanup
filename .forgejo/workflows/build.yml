@@ -65,8 +65,8 @@ jobs:
           layers: true
           extra-args: |
             --authfile /run/user/0/containers/auth.json
-            --cache-from codeberg.org/jvllmr/forgejo-pkg-cleanup-cache
-            --cache-to codeberg.org/jvllmr/forgejo-pkg-cleanup-cache
+          # --cache-from codeberg.org/jvllmr/forgejo-pkg-cleanup-cache
+          # --cache-to codeberg.org/jvllmr/forgejo-pkg-cleanup-cache
           # annotations: ${{ steps.metadata.outputs.annotations }}
           # https://github.com/docker/build-push-action/blob/master/docs/advanced/cache.md#registry-cache
           #cache-from: type=registry,ref=ghcr.io/jvllmr/frans:buildcache
