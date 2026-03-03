@@ -22,5 +22,5 @@ jobs:
           package: ^forgejo-pkg-cleanup(?:-cache)?$
           packageType: container
           owner: jvllmr
-          keepVersions: ^(?:v)?(?:\d+)(?:\.(\d+))?(?:\.(\d+))?(?:[a|b]\d+)?$
+          keepVersions: ^(?:(?:v)?(?:\d+)(?:\.(\d+))?(?:\.(\d+))?(?:[a|b]\d+)?)?(?:main)?$
           retention: 2d
