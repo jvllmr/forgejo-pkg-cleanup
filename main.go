@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"regexp"
+	"time"
 
 	"codeberg.org/mvdkleijn/forgejo-sdk/forgejo/v2"
 	"github.com/sethvargo/go-githubactions"
@@ -86,6 +87,16 @@ func main() {
 		ErrorOut(action, err)
 	}
 
+	retentionStr, err := RequiredInput(action, "retention")
+	if err != nil {
+		ErrorOut(action, err)
+	}
+
+	retention, err := time.ParseDuration(retentionStr)
+	if err != nil {
+		ErrorOut(action, err)
+	}
+
 	for _, pkg := range packages {
 		if !packageTypeRe.MatchString(pkg.Type) {
 			action.Debugf("package type %s does not match %s", pkg.Type, packageTypeStr)
@@ -99,6 +110,15 @@ func main() {
 
 		if !versionsRe.MatchString(pkg.Version) {
 			action.Debugf("package version %s does not match %s", pkg.Version, versionsStr)
+			continue
+		}
+
+		if time.Since(pkg.CreatedAt) >= retention {
+			action.Debugf(
+				"package created_at %s is inside retention span of %s",
+				pkg.CreatedAt,
+				retentionStr,
+			)
 			continue
 		}
 
