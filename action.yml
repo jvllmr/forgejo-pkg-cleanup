@@ -1,0 +1,38 @@
+name: forgejo-pkg-cleanup
+description: An action for cleaning up forgejo packages
+
+author: Jan Vollmer <jan@vllmr.dev>
+branding:
+  color: red
+  icon: trash
+
+inputs:
+  instance:
+    description: URL to the forgejo instance
+    required: true
+  username:
+    description: Username to use
+    required: true
+  password:
+    description: Password to use
+    required: true
+  package:
+    description: Regex that matches package to cleanup
+    required: true
+  packageType:
+    description: Regex that matches the package type
+    required: true
+  owner:
+    description: Owner of the package. Defaults to username
+    required: false
+  keepVersions:
+    description: Regex of versions to keep
+    required: true
+  retention:
+    description: A duration in which packages should be kept
+    default: 7d
+    required: true
+
+runs:
+  using: docker
+  image: codeberg.org/jvllmr/forgejo-pkg-cleanup

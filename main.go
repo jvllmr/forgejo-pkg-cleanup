@@ -1,0 +1,117 @@
+package main
+
+import (
+	"fmt"
+	"os"
+	"regexp"
+
+	"codeberg.org/mvdkleijn/forgejo-sdk/forgejo/v2"
+	"github.com/sethvargo/go-githubactions"
+)
+
+func RequiredInput(action *githubactions.Action, key string) (string, error) {
+	val := action.GetInput(key)
+	if val == "" {
+		return val, fmt.Errorf("%s is a required input", key)
+	}
+	return val, nil
+}
+
+func ErrorOut(action *githubactions.Action, err error) {
+	action.Errorf("fatal: %v", err)
+	os.Exit(1)
+}
+
+func main() {
+	action := githubactions.New()
+	url, err := RequiredInput(action, "instance")
+	if err != nil {
+		ErrorOut(action, err)
+	}
+
+	username, err := RequiredInput(action, "username")
+	if err != nil {
+		ErrorOut(action, err)
+	}
+
+	password, err := RequiredInput(action, "password")
+	if err != nil {
+		ErrorOut(action, err)
+	}
+
+	client, err := forgejo.NewClient(url, forgejo.SetBasicAuth(username, password))
+	if err != nil {
+		ErrorOut(action, err)
+	}
+
+	owner := action.GetInput("owner")
+	if owner == "" {
+		owner = username
+	}
+	packages, _, err := client.ListPackages(
+		owner,
+		forgejo.ListPackagesOptions{ListOptions: forgejo.ListOptions{Page: -1, PageSize: 0}},
+	)
+	if err != nil {
+		ErrorOut(action, err)
+	}
+
+	pkgStr, err := RequiredInput(action, "package")
+	if err != nil {
+		ErrorOut(action, err)
+	}
+
+	nameRe, err := regexp.Compile(pkgStr)
+	if err != nil {
+		ErrorOut(action, err)
+	}
+
+	versionsStr, err := RequiredInput(action, "keepVersions")
+	if err != nil {
+		ErrorOut(action, err)
+	}
+
+	versionsRe, err := regexp.Compile(versionsStr)
+	if err != nil {
+		ErrorOut(action, err)
+	}
+
+	packageTypeStr, err := RequiredInput(action, "packageType")
+	if err != nil {
+		ErrorOut(action, err)
+	}
+
+	packageTypeRe, err := regexp.Compile(packageTypeStr)
+	if err != nil {
+		ErrorOut(action, err)
+	}
+
+	for _, pkg := range packages {
+		if !packageTypeRe.MatchString(pkg.Type) {
+			action.Debugf("package type %s does not match %s", pkg.Type, packageTypeStr)
+			continue
+		}
+
+		if !nameRe.MatchString(pkg.Name) {
+			action.Debugf("package name %s does not match %s", pkg.Name, pkgStr)
+			continue
+		}
+
+		if !versionsRe.MatchString(pkg.Version) {
+			action.Debugf("package version %s does not match %s", pkg.Version, versionsStr)
+			continue
+		}
+
+		_, err := client.DeletePackage(owner, pkg.Type, pkg.Name, pkg.Version)
+		if err != nil {
+			action.Errorf(
+				"could not delete package %s %s (%s): %v",
+				pkg.Name,
+				pkg.Version,
+				pkg.Type,
+				err,
+			)
+		}
+	}
+
+}
