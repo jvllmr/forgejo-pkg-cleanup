@@ -132,6 +132,12 @@ func main() {
 				err,
 			)
 		}
+		action.Infof(
+			"Deleted %s %s (%s)",
+			pkg.Name,
+			pkg.Version,
+			pkg.Type,
+		)
 	}
 
 }
