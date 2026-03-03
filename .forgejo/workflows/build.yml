@@ -8,7 +8,7 @@ on:
       - main
     tags:
       - "*.*.*"
-      - "v*.*.*"
+      - "v.*"
 
 jobs:
   container:
