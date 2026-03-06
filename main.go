@@ -24,6 +24,7 @@ func ErrorOut(action *githubactions.Action, err error) {
 }
 
 func main() {
+	time.Sleep(3 * time.Second)
 	action := githubactions.New()
 	url, err := RequiredInput(action, "instance")
 	if err != nil {
