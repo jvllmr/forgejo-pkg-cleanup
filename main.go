@@ -24,8 +24,10 @@ func ErrorOut(action *githubactions.Action, err error) {
 }
 
 func main() {
-	time.Sleep(30 * time.Second)
 	action := githubactions.New()
+	action.Noticef("Waiting for 3 seconds...")
+	time.Sleep(3 * time.Second)
+	action.Noticef("Starting to cleanup packages")
 	url, err := RequiredInput(action, "instance")
 	if err != nil {
 		ErrorOut(action, err)
