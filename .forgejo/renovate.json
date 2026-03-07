@@ -1,7 +1,12 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "configMigration": true,
-  "extends": ["config:best-practices", ":automergeMinor", "schedule:weekly"],
+  "extends": [
+    "config:best-practices",
+    ":automergeMinor",
+    "group:allNonMajor",
+    "schedule:weekly"
+  ],
 
   "pre-commit": {
     "enabled": true
