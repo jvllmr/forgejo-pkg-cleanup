@@ -100,6 +100,7 @@ func main() {
 		ErrorOut(action, err)
 	}
 
+	deletionCount := 0
 	for _, pkg := range packages {
 		if !packageTypeRe.MatchString(pkg.Type) {
 			action.Debugf("package type %s does not match %s", pkg.Type, packageTypeStr)
@@ -145,6 +146,7 @@ func main() {
 			pkg.Version,
 			pkg.Type,
 		)
+		deletionCount += 1
 	}
-
+	action.Infof("deleted %d packages", deletionCount)
 }
