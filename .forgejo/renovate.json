@@ -1,0 +1,17 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "configMigration": true,
+  "extends": ["config:best-practices", ":automergeMinor", "schedule:weekly"],
+
+  "pre-commit": {
+    "enabled": true
+  },
+  "labels": ["dependencies"],
+  "rangeStrategy": "bump",
+
+  "vulnerabilityAlerts": {
+    "enabled": true
+  },
+  "osvVulnerabilityAlerts": true,
+  "automergeStrategy": "squash"
+}
