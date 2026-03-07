@@ -15,12 +15,10 @@ RUN --mount=type=cache,target=/go/pkg/mod \
     --mount=type=cache,target=/root/.cache/go-build go build
 RUN chmod +x /workspace/forgejo-pkg-cleanup
 
-FROM scratch AS runner
-COPY --from=builder /etc/ssl/certs /etc/ssl/certs
+FROM cgr.dev/chainguard/static:latest AS runner
 
 COPY --from=builder /workspace/forgejo-pkg-cleanup /opt/
 
-USER 1001:1001
 WORKDIR /opt
 
 ENV USER=1001
