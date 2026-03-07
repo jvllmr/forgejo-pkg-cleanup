@@ -17,6 +17,6 @@ jobs:
     steps:
       - name: Print to Log
         id: print-to-log
-        uses: https://github.com/actions/container-prebuilt-action@v0.2.0
+        uses: https://github.com/actions/container-prebuilt-action@c9bd8fbb1ccc880197428fd44480e04576fa4c5e # v0.2.0
         with:
           who-to-greet: ${{ inputs.who-to-greet }}
