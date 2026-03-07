@@ -17,6 +17,6 @@ jobs:
     steps:
       - name: Print to Log
         id: print-to-log
-        uses: https://github.com/actions/hello-world-docker-action@v2
+        uses: https://github.com/actions/container-prebuilt-action@v0.2.0
         with:
           who-to-greet: ${{ inputs.who-to-greet }}
