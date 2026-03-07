@@ -13,5 +13,6 @@
     "enabled": true
   },
   "osvVulnerabilityAlerts": true,
-  "automergeStrategy": "squash"
+  "automergeStrategy": "squash",
+  "postUpdateOptions": ["gomodTidy"]
 }
