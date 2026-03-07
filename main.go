@@ -121,7 +121,7 @@ func main() {
 			continue
 		}
 
-		if time.Since(pkg.CreatedAt) >= retention {
+		if time.Since(pkg.CreatedAt) < retention {
 			action.Debugf(
 				"package created_at %s is inside retention span of %s",
 				pkg.CreatedAt,
