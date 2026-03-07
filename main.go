@@ -6,7 +6,7 @@ import (
 	"regexp"
 	"time"
 
-	"codeberg.org/mvdkleijn/forgejo-sdk/forgejo/v2"
+	"codeberg.org/mvdkleijn/forgejo-sdk/forgejo/v3"
 	"github.com/sethvargo/go-githubactions"
 )
 
