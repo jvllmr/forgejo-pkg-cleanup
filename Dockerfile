@@ -23,3 +23,4 @@ WORKDIR /opt
 
 
 ENTRYPOINT [ "./forgejo-pkg-cleanup" ]
+CMD []
