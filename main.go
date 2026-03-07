@@ -111,8 +111,12 @@ func main() {
 			continue
 		}
 
-		if !versionsRe.MatchString(pkg.Version) {
-			action.Debugf("package version %s does not match %s", pkg.Version, versionsStr)
+		if versionsRe.MatchString(pkg.Version) {
+			action.Debugf(
+				"keeping package version %s because it does match %s",
+				pkg.Version,
+				versionsStr,
+			)
 			continue
 		}
 
