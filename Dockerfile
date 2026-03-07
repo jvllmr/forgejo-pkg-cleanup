@@ -15,7 +15,7 @@ RUN --mount=type=cache,target=/go/pkg/mod \
     --mount=type=cache,target=/root/.cache/go-build go build
 RUN chmod +x /workspace/forgejo-pkg-cleanup
 
-FROM cgr.dev/chainguard/static:latest AS runner
+FROM cgr.dev/chainguard/static:latest
 
 COPY --from=builder /workspace/forgejo-pkg-cleanup /opt/
 
