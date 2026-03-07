@@ -1,4 +1,4 @@
-FROM docker.io/golang:1.26.1-trixie@sha256:f6751d823c26342f9506c03797d2527668d095b0a15f1862cddb4d927a7a4ced AS base
+FROM docker.io/golang:1.26.1-trixie@sha256:ab8c4944b04c6f97c2b5bffce471b7f3d55f2228badc55eae6cce87596d5710b AS base
 
 
 WORKDIR /workspace
