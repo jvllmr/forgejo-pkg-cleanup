@@ -21,6 +21,5 @@ COPY --from=builder /workspace/forgejo-pkg-cleanup /opt/
 
 WORKDIR /opt
 
-ENV USER=1001
 
 ENTRYPOINT [ "./forgejo-pkg-cleanup" ]
