@@ -19,4 +19,6 @@ FROM cgr.dev/chainguard/static:latest
 
 COPY --from=builder /workspace/forgejo-pkg-cleanup /opt/
 
+LABEL org.opencontainers.image.vendor="Jan Vollmer <jan@vllmr.dev>"
+LABEL org.opencontainers.image.author="Jan Vollmer <jan@vllmr.dev>"
 ENTRYPOINT [ "/opt/forgejo-pkg-cleanup" ]
