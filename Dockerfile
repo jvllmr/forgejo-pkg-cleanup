@@ -19,4 +19,4 @@ FROM docker.io/debian:13.3-slim AS runner
 
 COPY --from=builder /workspace/forgejo-pkg-cleanup /opt/
 
-ENTRYPOINT [ "./forgejo-pkg-cleanup" ]
+ENTRYPOINT [ "/opt/forgejo-pkg-cleanup" ]
