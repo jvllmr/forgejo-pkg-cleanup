@@ -39,7 +39,7 @@ func collectPackages(client *forgejo.Client, owner string) ([]*forgejo.Package, 
 
 	page := 2
 	pageSize := len(packages)
-	for len(packages) >= packagesCount {
+	for len(packages) < packagesCount {
 		newPackages, _, err := client.ListPackages(
 			owner,
 			forgejo.ListPackagesOptions{
