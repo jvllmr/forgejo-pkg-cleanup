@@ -88,6 +88,7 @@ func main() {
 	if err != nil {
 		ErrorOut(action, err)
 	}
+	action.Infof("collected %d packages", len(packages))
 
 	pkgStr, err := RequiredInput(action, "package")
 	if err != nil {
