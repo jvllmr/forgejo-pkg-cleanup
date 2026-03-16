@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"regexp"
+	"strconv"
 	"time"
 
 	"codeberg.org/mvdkleijn/forgejo-sdk/forgejo/v3"
@@ -21,6 +22,40 @@ func RequiredInput(action *githubactions.Action, key string) (string, error) {
 func ErrorOut(action *githubactions.Action, err error) {
 	action.Errorf("fatal: %v", err)
 	os.Exit(1)
+}
+
+func collectPackages(client *forgejo.Client, owner string) ([]*forgejo.Package, error) {
+	packages, response, err := client.ListPackages(
+		owner,
+		forgejo.ListPackagesOptions{ListOptions: forgejo.ListOptions{Page: -1, PageSize: 0}},
+	)
+	if err != nil {
+		return nil, err
+	}
+	packagesCount, err := strconv.Atoi(response.Header.Get("x-total-count"))
+	if err != nil {
+		return nil, err
+	}
+
+	page := 2
+	pageSize := len(packages)
+	for {
+		if len(packages) >= packagesCount {
+			break
+		}
+		newPackages, _, err := client.ListPackages(
+			owner,
+			forgejo.ListPackagesOptions{
+				ListOptions: forgejo.ListOptions{Page: page, PageSize: pageSize},
+			},
+		)
+		if err != nil {
+			return nil, err
+		}
+		packages = append(packages, newPackages...)
+		page += 1
+	}
+	return packages, nil
 }
 
 func main() {
@@ -52,10 +87,7 @@ func main() {
 	if owner == "" {
 		owner = username
 	}
-	packages, _, err := client.ListPackages(
-		owner,
-		forgejo.ListPackagesOptions{ListOptions: forgejo.ListOptions{Page: -1, PageSize: 0}},
-	)
+	packages, err := collectPackages(client, owner)
 	if err != nil {
 		ErrorOut(action, err)
 	}
