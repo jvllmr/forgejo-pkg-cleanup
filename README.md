@@ -4,7 +4,7 @@ An action to cleanup forgejo packages based on a set of rules.
 
 ```yaml
 steps:
-  - uses: https://codeberg.org/jvllmr/forgejo-pkg-cleanup@v1.0.0
+  - uses: https://codeberg.org/jvllmr/forgejo-pkg-cleanup@v1.0.1
     with:
       instance: https://codeberg.org
       username: jvllmr
