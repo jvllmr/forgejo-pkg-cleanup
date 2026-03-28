@@ -37,7 +37,7 @@ jobs:
             type=semver,pattern=v{{major}}.{{minor}}
             type=semver,pattern=v{{version}}
       - name: Build container
-        uses: https://codeberg.org/jvllmr/forgejo-buildah-action@v0.1.3
+        uses: https://codeberg.org/jvllmr/forgejo-buildah-action@v0.1.4
         with:
           context: .
           containerfiles: ./Dockerfile
