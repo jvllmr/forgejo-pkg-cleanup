@@ -18,7 +18,7 @@ repos:
         args:
           - --fix=all
   - repo: https://github.com/jvllmr/pre-commit-prettier
-    rev: v3.8.1
+    rev: v3.8.2
     hooks:
       - id: prettier
   - repo: https://github.com/segmentio/golines
