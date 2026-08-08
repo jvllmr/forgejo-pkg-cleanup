@@ -30,4 +30,4 @@ jobs:
         uses: astral-sh/setup-uv@11f9893b081a58869d3b5fccaea48c9e9e46f990 # v8.3.2
         with:
           github-token: ${{ secrets.GH_PAT }}
-      - uses: https://github.com/j178/prek-action@5337cb91e0fa35a7ff31b9ca345126d8bbbcdf16 # v2.0.6
+      - uses: https://github.com/j178/prek-action@4e14d07f9231acabce116ccfca13b13dd9755ece # v3.0.0
