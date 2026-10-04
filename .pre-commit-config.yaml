@@ -12,13 +12,13 @@ repos:
       - id: trailing-whitespace
       - id: end-of-file-fixer
   - repo: https://github.com/woodruffw/zizmor-pre-commit
-    rev: v1.29.0
+    rev: v1.30.1
     hooks:
       - id: zizmor
         args:
           - --fix=all
   - repo: https://github.com/jvllmr/pre-commit-prettier
-    rev: v3.9.6
+    rev: v3.9.9
     hooks:
       - id: prettier
   - repo: https://github.com/segmentio/golines
@@ -26,7 +26,7 @@ repos:
     hooks:
       - id: golines
   - repo: https://github.com/golangci/golangci-lint/
-    rev: v2.12.2
+    rev: v2.14.0
     hooks:
       - id: golangci-lint-full
   - repo: local
