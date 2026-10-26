@@ -5,11 +5,25 @@ import (
 	"os"
 	"regexp"
 	"strconv"
+	"strings"
 	"time"
 
 	"codeberg.org/mvdkleijn/forgejo-sdk/forgejo/v3"
 	"github.com/sethvargo/go-githubactions"
 )
+
+// ParseRetention parses a duration, additionally accepting a "d" day suffix
+// like "7d", which time.ParseDuration does not support.
+func ParseRetention(s string) (time.Duration, error) {
+	if d, err := time.ParseDuration(s); err == nil {
+		return d, nil
+	}
+	if days, err := strconv.ParseFloat(strings.TrimSuffix(s, "d"), 64); err == nil &&
+		strings.HasSuffix(s, "d") {
+		return time.Duration(days * 24 * float64(time.Hour)), nil
+	}
+	return 0, fmt.Errorf("invalid duration %q", s)
+}
 
 func RequiredInput(action *githubactions.Action, key string) (string, error) {
 	val := action.GetInput(key)
@@ -125,7 +139,7 @@ func main() {
 		ErrorOut(action, err)
 	}
 
-	retention, err := time.ParseDuration(retentionStr)
+	retention, err := ParseRetention(retentionStr)
 	if err != nil {
 		ErrorOut(action, err)
 	}
