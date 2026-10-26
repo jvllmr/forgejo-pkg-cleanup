@@ -1,0 +1,51 @@
+name: Test
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  unit:
+    permissions:
+      contents: read
+    name: Unit
+    runs-on: ubuntu-full
+    steps:
+      - uses: https://github.com/actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Setup go
+        uses: https://github.com/actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: ">=1.27.3"
+          token: ${{ secrets.GH_PAT }}
+      - run: CGO_ENABLED=0 go test -count=1 ./...
+
+  e2e:
+    permissions:
+      contents: read
+    name: E2E
+    runs-on: docker
+    steps:
+      - uses: https://github.com/actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: apt-get update
+      - run: apt-get install podman podman-compose curl -y
+      # same container storage setup as the Build workflow
+      - run: echo root:1:65536 | tee /etc/subuid /etc/subgid
+      - run: mv /etc/containers/storage.conf /etc/containers/storage.conf.bak || true
+      - run: printf '[storage]\ndriver="vfs"\nrunroot="/run/containers/storage"\ngraphroot="/var/lib/containers/storage"\n' | tee /etc/containers/storage.conf
+      - name: Setup go
+        uses: https://github.com/actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: ">=1.27.3"
+          token: ${{ secrets.GH_PAT }}
+      - name: Run e2e tests
+        run: COMPOSE=podman-compose ./test-env/run.sh
+      - name: Teardown
+        if: always()
+        run: COMPOSE=podman-compose ./test-env/run.sh down

@@ -1,0 +1,17 @@
+name: forgejo-pkg-cleanup-test
+
+services:
+  forgejo:
+    image: codeberg.org/forgejo/forgejo:12
+    environment:
+      FORGEJO__server__DOMAIN: forgejo
+      FORGEJO__server__ROOT_URL: http://forgejo:3000/
+      FORGEJO__security__INSTALL_LOCK: "true"
+      FORGEJO__service__DISABLE_REGISTRATION: "true"
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - forgejo-data:/data
+
+volumes:
+  forgejo-data:
