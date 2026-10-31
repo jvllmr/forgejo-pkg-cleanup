@@ -1,32 +1,33 @@
 ci:
   skip:
-    - prettier
+    - oxfmt
     - go-fmt
     - go-vet
     - go-tidy
     - golangci-lint-full
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v6.0.0
+    rev: 3e8a8703264a2f4a69428a0aa4dcb512790b2c8c # v6.0.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
   - repo: https://github.com/woodruffw/zizmor-pre-commit
-    rev: v1.31.1
+    rev: c92afdf2c6ca336aaa8f39e2bd8d48f62dbd8e1f # v1.31.1
     hooks:
       - id: zizmor
         args:
           - --fix=all
-  - repo: https://github.com/jvllmr/pre-commit-prettier
-    rev: v3.9.10
+  - repo: https://github.com/oxc-project/mirrors-oxfmt
+    rev: 1fb54d06ff80b555a6a428d9b12ff0796e67d923 # v0.74.0
     hooks:
-      - id: prettier
-  - repo: https://github.com/segmentio/golines
-    rev: v0.13.0
+      - id: oxfmt
+        types_or: [javascript, jsx, ts, tsx, markdown, mdx]
+  - repo: https://github.com/golangci/golines
+    rev: 6b2297b9bff12ba7237caf910989ffbe06e6351a # v0.16.0
     hooks:
       - id: golines
   - repo: https://github.com/golangci/golangci-lint/
-    rev: v2.15.0
+    rev: 25c5369a93aacb8cccea0d46e1569ca4a194564d # v2.15.0
     hooks:
       - id: golangci-lint-full
   - repo: local
