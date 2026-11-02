@@ -35,4 +35,4 @@ inputs:
 
 runs:
   using: docker
-  image: docker://codeberg.org/jvllmr/forgejo-pkg-cleanup:v1.0.2
+  image: docker://codeberg.org/jvllmr/forgejo-pkg-cleanup:v1.0.2@sha256:4791a0882db7d711083dd6380a73c95a48291f1bce59e68339fb38244fc0758f
