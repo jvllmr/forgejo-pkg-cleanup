@@ -3,7 +3,7 @@ module codeberg.org/jvllmr/forgejo-pkg-cleanup
 go 1.27.3
 
 require (
-	codeberg.org/mvdkleijn/forgejo-sdk/forgejo/v3 v3.0.0
+	codeberg.org/mvdkleijn/forgejo-sdk/forgejo/v4 v4.0.0
 	github.com/sethvargo/go-githubactions v1.4.0
 )
 
