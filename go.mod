@@ -1,6 +1,6 @@
 module codeberg.org/jvllmr/forgejo-pkg-cleanup
 
-go 1.27.3
+go 1.27.4
 
 require (
 	codeberg.org/mvdkleijn/forgejo-sdk/forgejo/v3 v3.0.0
